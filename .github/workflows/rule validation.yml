@@ -1,0 +1,28 @@
+name: Validate Sigma rules
+
+on:
+  pull_request:
+    paths:
+      - 'rules/**' # Specify the path to your rules directory
+
+jobs:
+  validate-sigma-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: pip install check-jsonschema
+      - name: Validate Sigma rules
+        run: |
+          # Get the list of new files in the pull request
+          NEW_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+
+          # Validate only the new Sigma rule files
+          echo "Validating Sigma rules against sigma-schema.json"
+          check-jsonschema --schemafile tests/sigma-schema.json $(echo "$NEW_FILES" | grep '^rules/.*\.yml$')
