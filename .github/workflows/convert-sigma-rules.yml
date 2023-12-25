@@ -26,6 +26,7 @@ jobs:
         run: tests/convert.sh
       - name: Commit files
         run: |
+          git add ESRules
           git config --local user.email "hamid.bouhnik.it@gmail.com"
           git config --local user.name "NinnessOtu"
           git commit -m "Add changes" -a
