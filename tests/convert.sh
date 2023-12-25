@@ -20,3 +20,4 @@ for file in rules/*.yml; do
     output_directory="ESRules/$filename.yaml"
     sigmac -t elastalert -c tests/winlogbeat.yml --output "$output_directory" "$file"
 done
+ls ./ESRules
