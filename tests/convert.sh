@@ -18,5 +18,5 @@ for file in rules/*.yml; do
     extension="${filename##*.}"
     filename="${filename%.*}"
     output_directory="ESRules/$filename.yaml"
-    sigmac -t elastalert -c winlogbeat.yml --output "$output_directory" "$file"
+    sigmac -t elastalert -c tests/winlogbeat.yml --output "$output_directory" "$file"
 done
