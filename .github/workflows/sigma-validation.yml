@@ -2,8 +2,11 @@ name: Validate Sigma rules
 
 on:
   push:
+    paths:
+      - "rules/**.yml"
   pull_request:
-
+    paths:
+      - "rules/**.yml"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
