@@ -1,0 +1,14 @@
+alert:
+- debug
+description: Detects scenarios where an attacker attempts to enumerate potential existing users, resulting in failed Kerberos TGT requests with unexisting or invalid accounts.
+filter:
+- query:
+    query_string:
+      query: (winlog.channel:"Security" AND (winlog.event_id:("4771" OR "4768") AND winlog.event_data.Status:"0x6") AND (NOT (winlog.event_data.IpAddress:"%domain_controllers_ips%" OR winlog.event_data.TicketOptions:"1350565888")))
+index: winlogbeat-*
+name: Brutforce-enumeration-with-unexisting-users-Kerberos
+priority: 2
+realert:
+  minutes: 0
+type: any
+
