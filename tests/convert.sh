@@ -21,3 +21,8 @@ for file in rules/*.yml; do
     sigmac -t elastalert -c tests/winlogbeat.yml --output "$output_directory" "$file"
 done
 ls ./ESRules
+git add ./ESRules
+git config --local user.email "hamid.bouhnik.it@gmail.com"
+git config --local user.name "NinnessOtu"
+git commit -m "Add converted rules" -a || true
+git push
