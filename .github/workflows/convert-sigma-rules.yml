@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  validate-sigma-rules:
+  convert-sigma-rules:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,5 +22,5 @@ jobs:
         run: pip install sigmatools
       - name: Giving the execution permission
         run: chmod +x tests/convert.sh
-      - name: Validate Sigma rules
+      - name: Convert Sigma rules
         run: tests/convert.sh
