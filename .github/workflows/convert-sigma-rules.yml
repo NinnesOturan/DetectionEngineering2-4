@@ -2,7 +2,8 @@ name: Convert Sigma rules
 
 on:
   push:
-
+    paths:
+      - "rules/**.yml"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
