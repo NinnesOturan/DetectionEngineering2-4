@@ -2,7 +2,7 @@ name: Convert Sigma rules
 
 on:
   workflow_run:
-    workflows: ['validate-sigma-rules']
+    workflows: ['Convert Sigma rules']
     types:
       - completed
 #  push:
