@@ -1,0 +1,14 @@
+alert:
+- debug
+description: Detects scenarios where an attacker abuse the SeMachineAccountPrivilege which allows per default any authenticated user to join a computer to the domain. Later on, this computer account can be manipulated in order to elevate privileges.
+filter:
+- query:
+    query_string:
+      query: (winlog.channel:"Security" AND (winlog.event_id:"4673" AND winlog.event_data.PrivilegeList:"SeMachineAccountPrivilege") AND (NOT (winlog.event_data.SubjectUserSid:"S\-1\-5\-18" OR winlog.event_data.SubjectUserName:"%admin_acounts%")))
+index: winlogbeat-*
+name: Privilege-SeMachineAccountPrivilege-abuse
+priority: 3
+realert:
+  minutes: 0
+type: any
+
