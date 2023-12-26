@@ -1,0 +1,21 @@
+alert:
+- debug
+buffer_time:
+  minutes: 5
+description: Detect if a source host is requesting multiple Kerberos Service tickets (TGS) for different assets in a short period of time.
+doc_type: doc
+filter:
+- query:
+    query_string:
+      query: (winlog.channel:"Security" AND (winlog.event_id:"4769" AND winlog.event_data.ServiceName.keyword:*$ AND winlog.event_data.Status:"0") AND (NOT (winlog.event_data.IpAddress:("\:\:1" OR "%domain_controllers_ip%") OR TargetUserName.keyword:*$@*)))
+index: winlogbeat-*
+max_threshold: 20
+metric_agg_key: winlog.event_data.ServiceName.keyword
+metric_agg_type: cardinality
+name: SharpHound-host-enumeration-over-Kerberos
+priority: 3
+query_key: winlog.event_data.IpAddress.keyword
+realert:
+  minutes: 0
+type: metric_aggregation
+
