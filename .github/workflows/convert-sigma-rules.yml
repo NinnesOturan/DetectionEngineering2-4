@@ -1,10 +1,10 @@
 name: Convert Sigma rules
-
 on:
   workflow_run:
-    workflows: ['Convert Sigma rules']
+    workflows: ["Validate Sigma rules"]
     types:
       - completed
+#on:
 #  push:
 #    paths:
 #      - "rules/**.yml"
