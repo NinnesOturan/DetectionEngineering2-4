@@ -1,0 +1,14 @@
+alert:
+- debug
+description: Detects scenarios where an attacker changes permissions on the AdminSDHolder container to establish persistence.
+filter:
+- query:
+    query_string:
+      query: (winlog.channel:"Security" AND winlog.event_id:"5136" AND OperationType:"%%14674" AND winlog.event_data.AttributeLDAPDisplayName:"nTSecurityDescriptor" AND ObjectDN.keyword:CN\=AdminSDHolder*)
+index: winlogbeat-*
+name: AdminSDHolder-permissions-changed-for-persistence
+priority: 2
+realert:
+  minutes: 0
+type: any
+
