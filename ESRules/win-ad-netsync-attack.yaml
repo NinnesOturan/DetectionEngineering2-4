@@ -1,0 +1,14 @@
+alert:
+- debug
+description: NetSync allows an attacker to take the NTLM hash of a Domain Controller (DC) machine account ("usually" identified by ending in "$") and using it to obtain the NTLM machine account hash of another machine account through impersonation (similar to, but different from, DCSync). Where DCSync can obtain user account passwords, NetSync is limited to machine accounts. The other main differentiator between DCSync and NetSync is that DCSync will make use of Microsoft's Directory Replication Service (DRS) Remote Protocol, whereas NetSync uses the older Netlogon Remote Protocol (MS-NRPC)
+filter:
+- query:
+    query_string:
+      query: (winlog.channel:"Security" AND (winlog.event_id:"4624" AND Computer:"%domain_controllers%" AND TargetUserSid:"S\-1\-5\-21\-" AND winlog.event_data.LogonType:"3" AND winlog.event_data.AuthenticationPackageName:"Kerberos" AND winlog.event_id:"5145" AND winlog.event_data.ShareName.keyword:\\*\\IPC$ AND winlog.event_data.RelativeTargetName:"NETLOGON") AND (NOT (winlog.event_data.SubjectUserName.keyword:*$ OR winlog.event_data.SubjectUserSid:"S\-1\-5\-7" OR winlog.event_data.IpAddress:("%domain_controllers%" OR "%exchange_servers%"))))
+index: winlogbeat-*
+name: NetSYnc-attack
+priority: 2
+realert:
+  minutes: 0
+type: any
+
