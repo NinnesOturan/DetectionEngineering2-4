@@ -1,0 +1,14 @@
+alert:
+- debug
+description: Detects scenarios where an attacker will attempt to take control over a group policy.
+filter:
+- query:
+    query_string:
+      query: (winlog.channel:"Security" AND (winlog.event_id:"5136" AND winlog.event_data.AttributeLDAPDisplayName:"ntSecurityDescriptor" AND winlog.event_data.ObjectClass:"groupPolicyContainer" AND OperationType:"%%14674") AND (NOT (winlog.event_data.SubjectUserName:("SRVAGPM01$" OR "SRVAGPM02$"))))
+index: winlogbeat-*
+name: Permissions-changed-on-a-Group-Policy-GPO
+priority: 3
+realert:
+  minutes: 0
+type: any
+
